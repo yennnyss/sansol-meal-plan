@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>우리 아기 일주일 식단표 🍽️</title>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FFF9F0;
+    --peach: #FFD9B5;
+    --coral: #FF7F5C;
+    --green: #6DBE82;
+    --mint: #B8EAD0;
+    --sky: #A8D8EA;
+    --lavender: #CDB4DB;
+    --yellow: #FFE66D;
+    --brown: #8B5E3C;
+    --text: #3A2E2E;
+    --soft-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nanum Gothic', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 20px;
+    background-image: 
+      radial-gradient(circle at 10% 20%, rgba(255,217,181,0.4) 0%, transparent 50%),
+      radial-gradient(circle at 90% 80%, rgba(168,216,234,0.3) 0%, transparent 50%),
+      radial-gradient(circle at 50% 50%, rgba(109,190,130,0.1) 0%, transparent 70%);
+  }
+
+  .page-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  header {
+    text-align: center;
+    padding: 40px 20px 30px;
+    animation: fadeDown 0.6s ease;
+  }
+
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .header-badge {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 5px 16px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  h1 {
+    font-family: 'Gaegu', cursive;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--brown);
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  h1 span {
+    color: var(--coral);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 6px;
+  }
+
+  .period {
+    font-size: 13px;
+    color: var(--coral);
+    font-weight: 700;
+  }
+
+  /* Nutrition legend */
+  .nutrition-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 20px 0 30px;
+    animation: fadeUp 0.7s ease 0.2s both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .nut-badge {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: white;
+    border-radius: 20px;
+    padding: 5px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: var(--soft-shadow);
+  }
+
+  .nut-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  /* Market info */
+  .market-banner {
+    background: white;
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    box-shadow: var(--soft-shadow);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    animation: fadeUp 0.7s ease 0.3s both;
+    border-left: 5px solid var(--coral);
+  }
+
+  .market-banner .market-title {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--coral);
+    min-width: 100px;
+  }
+
+  .market-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .market-tag {
+    background: var(--peach);
+    border-radius: 10px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--brown);
+  }
+
+  /* Day cards */
+  .days-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .day-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--soft-shadow);
+    animation: fadeUp 0.6s ease both;
+    transition: transform 0.2s ease;
+  }
+
+  .day-card:hover {
+    transform: translateY(-3px);
+  }
+
+  .day-card:nth-child(1) { animation-delay: 0.1s; }
+  .day-card:nth-child(2) { animation-delay: 0.15s; }
+  .day-card:nth-child(3) { animation-delay: 0.2s; }
+  .day-card:nth-child(4) { animation-delay: 0.25s; }
+  .day-card:nth-child(5) { animation-delay: 0.3s; }
+  .day-card:nth-child(6) { animation-delay: 0.35s; }
+  .day-card:nth-child(7) { animation-delay: 0.4s; }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    color: white;
+  }
+
+  .day-header.mon { background: linear-gradient(135deg, #FF7F5C, #FF9F6B); }
+  .day-header.tue { background: linear-gradient(135deg, #6DBE82, #8DD4A0); }
+  .day-header.wed { background: linear-gradient(135deg, #A8D8EA, #7EC8E3); }
+  .day-header.thu { background: linear-gradient(135deg, #CDB4DB, #B89FCC); }
+  .day-header.fri { background: linear-gradient(135deg, #FFE66D, #F5C842); }
+  .day-header.sat { background: linear-gradient(135deg, #FF7F5C, #D96B6B); }
+  .day-header.sun { background: linear-gradient(135deg, #6DBE82, #3DA858); }
+
+  .day-header.fri { color: var(--brown); }
+
+  .day-emoji {
+    font-size: 28px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+  }
+
+  .day-label {
+    flex: 1;
+  }
+
+  .day-name {
+    font-family: 'Gaegu', cursive;
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .day-date {
+    font-size: 12px;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  .featured-ingredient {
+    background: rgba(255,255,255,0.25);
+    border-radius: 10px;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    backdrop-filter: blur(4px);
+  }
+
+  .day-body {
+    padding: 16px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 600px) {
+    .day-body {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .meal-section {
+    border-radius: 12px;
+    padding: 12px;
+    background: var(--cream);
+  }
+
+  .meal-section.soup { background: #FFF3E8; }
+  .meal-section.side1 { background: #EEF8F0; }
+  .meal-section.side2 { background: #EAF5FB; }
+
+  .meal-label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .meal-label.soup { color: var(--coral); }
+  .meal-label.side1 { color: var(--green); }
+  .meal-label.side2 { color: #5AAAC7; }
+
+  .meal-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+
+  .meal-ingredients {
+    font-size: 11px;
+    color: #888;
+    line-height: 1.5;
+  }
+
+  .meal-ingredients .highlight {
+    color: var(--coral);
+    font-weight: 700;
+  }
+
+  .nut-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 6px;
+  }
+
+  .nt {
+    font-size: 10px;
+    padding: 2px 7px;
+    border-radius: 8px;
+    font-weight: 700;
+  }
+
+  .nt.carb { background: #FFE0CC; color: #C04A00; }
+  .nt.protein { background: #D4EDDA; color: #1A5C2A; }
+  .nt.fat { background: #FFF3CD; color: #856404; }
+  .nt.vit { background: #D1ECF1; color: #0C5460; }
+  .nt.mineral { background: #E8D8F0; color: #5A2D8A; }
+
+  /* Tips section */
+  .tips-section {
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    margin-top: 28px;
+    box-shadow: var(--soft-shadow);
+    animation: fadeUp 0.7s ease 0.5s both;
+  }
+
+  .tips-title {
+    font-family: 'Gaegu', cursive;
+    font-size: 22px;
+    color: var(--brown);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+  }
+
+  .tip-item {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 12px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .tip-item strong {
+    display: block;
+    color: var(--coral);
+    font-size: 12px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  footer {
+    text-align: center;
+    padding: 30px 0 10px;
+    font-size: 12px;
+    color: #bbb;
+  }
+
+  @media print {
+    body { background: white; padding: 0; }
+    .day-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrapper">
+
+  <header>
+    <div class="header-badge">만 24개월 유아식</div>
+    <h1>🍚 우리 아기<br><span>일주일 저녁 식단표</span></h1>
+    <p class="subtitle">이마트 · 롯데마트 특가 야채 활용 | 5대 영양소 충족</p>
+    <p class="period">2026년 3월 30일 (월) ~ 4월 5일 (일)</p>
+  </header>
+
+  <div class="nutrition-legend">
+    <div class="nut-badge"><div class="nut-dot" style="background:#FFB299"></div>탄수화물</div>
+    <div class="nut-badge"><div class="nut-dot" style="background:#6DBE82"></div>단백질</div>
+    <div class="nut-badge"><div class="nut-dot" style="background:#FFE66D"></div>지방</div>
+    <div class="nut-badge"><div class="nut-dot" style="background:#A8D8EA"></div>비타민</div>
+    <div class="nut-badge"><div class="nut-dot" style="background:#CDB4DB"></div>무기질</div>
+  </div>
+
+  <div class="market-banner">
+    <div class="market-title">🛒 이번 주 특가 활용</div>
+    <div class="market-items">
+      <span class="market-tag">🫑 파프리카 (이마트)</span>
+      <span class="market-tag">🍅 완숙 토마토 (롯데마트)</span>
+      <span class="market-tag">🍄 새송이버섯 (롯데마트)</span>
+      <span class="market-tag">🥚 무항생제 닭 (이마트)</span>
+      <span class="market-tag">🌱 봄 제철 봄동·냉이</span>
+    </div>
+  </div>
+
+  <div class="days-grid">
+
+    <!-- 월요일 -->
+    <div class="day-card">
+      <div class="day-header mon">
+        <div class="day-emoji">🌱</div>
+        <div class="day-label">
+          <div class="day-name">월요일</div>
+          <div class="day-date">3월 30일</div>
+        </div>
+        <div class="featured-ingredient">🍅 토마토 특가</div>
+      </div>
+      <div class="day-body">
+        <div class="meal-section soup">
+          <div class="meal-label soup">🍲 국</div>
+          <div class="meal-name">두부 된장국</div>
+          <div class="meal-ingredients">두부, 감자, <span class="highlight">완숙 토마토</span>, 된장</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt mineral">무기질</span>
+            <span class="nt vit">비타민</span>
+          </div>
+        </div>
+        <div class="meal-section side1">
+          <div class="meal-label side1">🥘 반찬 ①</div>
+          <div class="meal-name">닭고기 채소볶음</div>
+          <div class="meal-ingredients">닭가슴살, <span class="highlight">파프리카</span>, 양파, 참기름</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt fat">지방</span>
+            <span class="nt vit">비타민</span>
+          </div>
+        </div>
+        <div class="meal-section side2">
+          <div class="meal-label side2">🥗 반찬 ②</div>
+          <div class="meal-name">감자 매시</div>
+          <div class="meal-ingredients">감자, 버터, 우유</div>
+          <div class="nut-tags">
+            <span class="nt carb">탄수화물</span>
+            <span class="nt fat">지방</span>
+            <span class="nt mineral">무기질</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 화요일 -->
+    <div class="day-card">
+      <div class="day-header tue">
+        <div class="day-emoji">🍄</div>
+        <div class="day-label">
+          <div class="day-name">화요일</div>
+          <div class="day-date">3월 31일</div>
+        </div>
+        <div class="featured-ingredient">🍄 새송이버섯 특가</div>
+      </div>
+      <div class="day-body">
+        <div class="meal-section soup">
+          <div class="meal-label soup">🍲 국</div>
+          <div class="meal-name">새송이버섯 달걀국</div>
+          <div class="meal-ingredients"><span class="highlight">새송이버섯</span>, 달걀, 대파, 국간장</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt vit">비타민</span>
+            <span class="nt mineral">무기질</span>
+          </div>
+        </div>
+        <div class="meal-section side1">
+          <div class="meal-label side1">🥘 반찬 ①</div>
+          <div class="meal-name">연두부 찜</div>
+          <div class="meal-ingredients">연두부, 간장, 참기름, 당근</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt fat">지방</span>
+            <span class="nt mineral">무기질</span>
+          </div>
+        </div>
+        <div class="meal-section side2">
+          <div class="meal-label side2">🥗 반찬 ②</div>
+          <div class="meal-name">브로콜리 무침</div>
+          <div class="meal-ingredients">브로콜리, 참기름, 통깨</div>
+          <div class="nut-tags">
+            <span class="nt vit">비타민</span>
+            <span class="nt mineral">무기질</span>
+            <span class="nt carb">탄수화물</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 수요일 -->
+    <div class="day-card">
+      <div class="day-header wed">
+        <div class="day-emoji">🌿</div>
+        <div class="day-label">
+          <div class="day-name">수요일</div>
+          <div class="day-date">4월 1일</div>
+        </div>
+        <div class="featured-ingredient">🌿 봄 냉이 제철</div>
+      </div>
+      <div class="day-body">
+        <div class="meal-section soup">
+          <div class="meal-label soup">🍲 국</div>
+          <div class="meal-name">냉이 된장국</div>
+          <div class="meal-ingredients"><span class="highlight">봄 냉이</span>, 두부, 된장, 조개육수</div>
+          <div class="nut-tags">
+            <span class="nt vit">비타민</span>
+            <span class="nt mineral">무기질</span>
+            <span class="nt protein">단백질</span>
+          </div>
+        </div>
+        <div class="meal-section side1">
+          <div class="meal-label side1">🥘 반찬 ①</div>
+          <div class="meal-name">소고기 당근 볶음</div>
+          <div class="meal-ingredients">다진 소고기, 당근, 간장, 참기름</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt fat">지방</span>
+            <span class="nt vit">비타민</span>
+          </div>
+        </div>
+        <div class="meal-section side2">
+          <div class="meal-label side2">🥗 반찬 ②</div>
+          <div class="meal-name">고구마 조림</div>
+          <div class="meal-ingredients">고구마, 올리고당, 버터</div>
+          <div class="nut-tags">
+            <span class="nt carb">탄수화물</span>
+            <span class="nt vit">비타민</span>
+            <span class="nt fat">지방</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 목요일 -->
+    <div class="day-card">
+      <div class="day-header thu">
+        <div class="day-emoji">🫑</div>
+        <div class="day-label">
+          <div class="day-name">목요일</div>
+          <div class="day-date">4월 2일</div>
+        </div>
+        <div class="featured-ingredient">🫑 파프리카 특가</div>
+      </div>
+      <div class="day-body">
+        <div class="meal-section soup">
+          <div class="meal-label soup">🍲 국</div>
+          <div class="meal-name">감자 콩나물국</div>
+          <div class="meal-ingredients">감자, 콩나물, 다진 마늘, 국간장</div>
+          <div class="nut-tags">
+            <span class="nt carb">탄수화물</span>
+            <span class="nt protein">단백질</span>
+            <span class="nt mineral">무기질</span>
+          </div>
+        </div>
+        <div class="meal-section side1">
+          <div class="meal-label side1">🥘 반찬 ①</div>
+          <div class="meal-name">파프리카 달걀찜</div>
+          <div class="meal-ingredients"><span class="highlight">파프리카</span>, 달걀 2개, 우유, 소금</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt fat">지방</span>
+            <span class="nt vit">비타민</span>
+          </div>
+        </div>
+        <div class="meal-section side2">
+          <div class="meal-label side2">🥗 반찬 ②</div>
+          <div class="meal-name">시금치 나물</div>
+          <div class="meal-ingredients">시금치, 참기름, 통깨, 소금</div>
+          <div class="nut-tags">
+            <span class="nt vit">비타민</span>
+            <span class="nt mineral">무기질</span>
+            <span class="nt fat">지방</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 금요일 -->
+    <div class="day-card">
+      <div class="day-header fri">
+        <div class="day-emoji">🐟</div>
+        <div class="day-label">
+          <div class="day-name">금요일</div>
+          <div class="day-date">4월 3일</div>
+        </div>
+        <div class="featured-ingredient">🍄 버섯 활용</div>
+      </div>
+      <div class="day-body">
+        <div class="meal-section soup">
+          <div class="meal-label soup">🍲 국</div>
+          <div class="meal-name">흰살 생선 미역국</div>
+          <div class="meal-ingredients">동태살, 미역, 들기름, 국간장</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt mineral">무기질</span>
+            <span class="nt fat">지방</span>
+          </div>
+        </div>
+        <div class="meal-section side1">
+          <div class="meal-label side1">🥘 반찬 ①</div>
+          <div class="meal-name">새송이버섯 전</div>
+          <div class="meal-ingredients"><span class="highlight">새송이버섯</span>, 달걀, 밀가루, 식용유</div>
+          <div class="nut-tags">
+            <span class="nt carb">탄수화물</span>
+            <span class="nt protein">단백질</span>
+            <span class="nt fat">지방</span>
+          </div>
+        </div>
+        <div class="meal-section side2">
+          <div class="meal-label side2">🥗 반찬 ②</div>
+          <div class="meal-name">토마토 달걀 볶음</div>
+          <div class="meal-ingredients"><span class="highlight">완숙 토마토</span>, 달걀, 올리브유</div>
+          <div class="nut-tags">
+            <span class="nt vit">비타민</span>
+            <span class="nt protein">단백질</span>
+            <span class="nt fat">지방</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 토요일 -->
+    <div class="day-card">
+      <div class="day-header sat">
+        <div class="day-emoji">🎉</div>
+        <div class="day-label">
+          <div class="day-name">토요일</div>
+          <div class="day-date">4월 4일</div>
+        </div>
+        <div class="featured-ingredient">🌿 봄동 제철</div>
+      </div>
+      <div class="day-body">
+        <div class="meal-section soup">
+          <div class="meal-label soup">🍲 국</div>
+          <div class="meal-name">닭고기 채소 수프</div>
+          <div class="meal-ingredients">닭가슴살, 당근, 양파, <span class="highlight">파프리카</span>, 우유</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt vit">비타민</span>
+            <span class="nt mineral">무기질</span>
+          </div>
+        </div>
+        <div class="meal-section side1">
+          <div class="meal-label side1">🥘 반찬 ①</div>
+          <div class="meal-name">봄동 겉절이</div>
+          <div class="meal-ingredients"><span class="highlight">봄동</span>, 참기름, 통깨, 소금 (맵지 않게)</div>
+          <div class="nut-tags">
+            <span class="nt vit">비타민</span>
+            <span class="nt mineral">무기질</span>
+            <span class="nt fat">지방</span>
+          </div>
+        </div>
+        <div class="meal-section side2">
+          <div class="meal-label side2">🥗 반찬 ②</div>
+          <div class="meal-name">두부 스테이크</div>
+          <div class="meal-ingredients">두부, 간장, 올리브유, 참기름</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt fat">지방</span>
+            <span class="nt mineral">무기질</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 일요일 -->
+    <div class="day-card">
+      <div class="day-header sun">
+        <div class="day-emoji">☀️</div>
+        <div class="day-label">
+          <div class="day-name">일요일</div>
+          <div class="day-date">4월 5일</div>
+        </div>
+        <div class="featured-ingredient">🍅 토마토 활용</div>
+      </div>
+      <div class="day-body">
+        <div class="meal-section soup">
+          <div class="meal-label soup">🍲 국</div>
+          <div class="meal-name">소고기 미역국</div>
+          <div class="meal-ingredients">다진 소고기, 미역, 참기름, 국간장</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt mineral">무기질</span>
+            <span class="nt fat">지방</span>
+          </div>
+        </div>
+        <div class="meal-section side1">
+          <div class="meal-label side1">🥘 반찬 ①</div>
+          <div class="meal-name">새송이버섯 소고기 볶음</div>
+          <div class="meal-ingredients"><span class="highlight">새송이버섯</span>, 소고기, 간장, 참기름</div>
+          <div class="nut-tags">
+            <span class="nt protein">단백질</span>
+            <span class="nt fat">지방</span>
+            <span class="nt vit">비타민</span>
+          </div>
+        </div>
+        <div class="meal-section side2">
+          <div class="meal-label side2">🥗 반찬 ②</div>
+          <div class="meal-name">토마토 치즈 구이</div>
+          <div class="meal-ingredients"><span class="highlight">완숙 토마토</span>, 모짜렐라, 올리브유</div>
+          <div class="nut-tags">
+            <span class="nt vit">비타민</span>
+            <span class="nt protein">단백질</span>
+            <span class="nt fat">지방</span>
+            <span class="nt mineral">무기질</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 영양소 충족 현황 -->
+  <div class="tips-section">
+    <div class="tips-title">💡 엄마를 위한 조리 팁</div>
+    <div class="tips-grid">
+      <div class="tip-item">
+        <strong>🧂 간 조절</strong>
+        만 24개월은 어른 간의 1/4 수준으로. 국간장·된장은 소량만 사용하고 짠맛보다 재료 본연의 맛을 살려주세요.
+      </div>
+      <div class="tip-item">
+        <strong>🫑 파프리카 활용</strong>
+        익히면 단맛이 나서 아기가 좋아해요. 잘게 다져 달걀찜이나 볶음에 넣으면 거부감이 줄어요.
+      </div>
+      <div class="tip-item">
+        <strong>🍅 토마토 영양</strong>
+        리코펜이 풍부! 살짝 익히면 흡수율이 높아져요. 달걀과 함께 볶으면 단백질+비타민 완성.
+      </div>
+      <div class="tip-item">
+        <strong>🍄 새송이버섯</strong>
+        씹는 연습에 좋은 식재료. 잘게 다지거나 얇게 썰어 사용하고, 전으로 만들면 잘 먹어요.
+      </div>
+      <div class="tip-item">
+        <strong>🌿 봄 제철 채소</strong>
+        냉이·봄동은 3~4월 최고 제철! 비타민과 철분이 풍부해 봄철 아기 면역력에 도움돼요.
+      </div>
+      <div class="tip-item">
+        <strong>🍚 밥 + 국 기본</strong>
+        흰쌀밥 80~100g + 국 + 반찬 2가지면 충분해요. 과식보다 규칙적인 식사 시간이 중요!
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    만 24개월 유아 맞춤 | 이마트·롯데마트 3월 4주차 특가 야채 활용 | 5대 영양소 (탄수화물·단백질·지방·비타민·무기질) 충족
+  </footer>
+
+</div>
+</body>
+</html>
